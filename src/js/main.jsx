@@ -1,18 +1,29 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
+import React, { useState, useEffect } from "react";
+import ReactDOM from "react-dom/client";
+import SecondsCounter from "./components/SecondsCounter";
+import Home from "./components/Home";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-//Bootstrap
-import "bootstrap/dist/css/bootstrap.min.css";
-import "bootstrap"
 
-// index.css'
-import '../styles/index.css'
 
-// components
-import Home from './components/Home';
+const App = () => {
+  const [counter, setCounter] = useState(0);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
-  <React.StrictMode>
-    <Home/>
-  </React.StrictMode>,
-)
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCounter((prev) => prev + 1);
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
+
+  return (
+    <div>
+      <Home />
+      <SecondsCounter seconds={counter} />
+    </div>
+  );
+};
+
+const root = ReactDOM.createRoot(document.getElementById("root"));
+root.render(<App />);
